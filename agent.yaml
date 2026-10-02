@@ -1,0 +1,21 @@
+spec_version: "0.1.0"
+name: "mobile-agent"
+version: "3.5.0"
+description: "Autonomous multi-modal GUI agent family for mobile phone and computer use, visual grounding, planning, reflection, and OS automation."
+author: "Tongyi Lab, Alibaba Group / MobileAgent Contributors"
+license: "Apache-2.0"
+metadata:
+  domain: "Developer Tools / Autonomous GUI Agents, Mobile & Computer Use, Visual Grounding"
+  category: "Developer Tools"
+  framework: "GUI-Owl / Qwen-VL / PyTorch / Android ADB"
+  language: "Python"
+skills:
+  - "visual-gui-grounding"
+  - "mobile-device-action-execution"
+  - "multimodal-reflection-critic"
+  - "cross-platform-task-planning"
+tools:
+  - "adb-device-controller"
+  - "visual-screenshot-grounder"
+  - "gui-critic-evaluator"
+  - "ui-action-dispatcher"

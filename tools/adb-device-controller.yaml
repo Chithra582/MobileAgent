@@ -1,0 +1,16 @@
+name: adb-device-controller
+description: Executes low-level Android Debug Bridge (ADB) commands for screen capture, input events, and app lifecycle management.
+input_schema:
+  type: object
+  properties:
+    command_type:
+      type: string
+      description: ADB command category ('screencap', 'input_tap', 'input_swipe', 'input_text', 'keyevent', 'start_app').
+    parameters:
+      type: object
+      description: Specific parameters for the command (e.g. coordinates, text string, key code, package name).
+    device_id:
+      type: string
+      description: Target ADB device serial identifier (optional if single device connected).
+  required:
+    - command_type

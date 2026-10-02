@@ -1,0 +1,21 @@
+name: gui-critic-evaluator
+description: Compares consecutive screen captures and verifies whether the dispatched action achieved its intended state transition.
+input_schema:
+  type: object
+  properties:
+    pre_action_image:
+      type: string
+      description: File path of the screenshot captured before executing the action.
+    post_action_image:
+      type: string
+      description: File path of the screenshot captured after executing the action.
+    intended_action:
+      type: string
+      description: Description of the action that was dispatched.
+    expected_outcome:
+      type: string
+      description: Description of the anticipated visual change or page transition.
+  required:
+    - pre_action_image
+    - post_action_image
+    - intended_action

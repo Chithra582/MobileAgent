@@ -1,0 +1,22 @@
+name: ui-action-dispatcher
+description: Dispatches high-level UI gestures (tap, swipe, scroll, type, wait) with automated coordinate boundary validation.
+input_schema:
+  type: object
+  properties:
+    action_type:
+      type: string
+      description: Type of gesture ('tap', 'swipe', 'type', 'back', 'home', 'wait').
+    coordinates:
+      type: array
+      items:
+        type: integer
+      description: Array of integer pixel coordinates [x, y] or [x1, y1, x2, y2] for swipe.
+    text_input:
+      type: string
+      description: Text string to type if action_type is 'type'.
+    duration_ms:
+      type: integer
+      description: Duration in milliseconds for swipe or press operations.
+      default: 300
+  required:
+    - action_type

@@ -1,0 +1,17 @@
+name: visual-screenshot-grounder
+description: Processes screen images using OCR and vision-language grounding to detect elements and predict touch coordinates.
+input_schema:
+  type: object
+  properties:
+    screenshot_path:
+      type: string
+      description: Local file path of the captured screen image.
+    target_description:
+      type: string
+      description: Natural language description of the target UI element or text to localize.
+    extract_all_elements:
+      type: boolean
+      description: Whether to return full detected bounding boxes and OCR tokens across the entire screen.
+      default: false
+  required:
+    - screenshot_path
