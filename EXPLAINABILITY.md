@@ -1,8 +1,8 @@
 # EXPLAINABILITY.md
 
-This document explains the internal mechanisms, data lineage, operational boundaries, and governance framework of **# Explainability & Decision Transparency Report** (`mobile-agent`) in accordance with the **OpenGAP v0.1.0** specification for the **HiDevs GitAgent Passport** clearance pipeline.
+This document explains the internal mechanisms, data lineage, operational boundaries, and governance framework of **Mobile Agent** (`mobile-agent`) in accordance with the **OpenGAP v0.1.0** specification for the **HiDevs GitAgent Passport** clearance pipeline.
 
-> **Agent Name:** # Explainability & Decision Transparency Report (`mobile-agent`)  
+> **Agent Name:** Mobile Agent (`mobile-agent`)  
 > **Specification:** OpenGAP v0.1.0  
 > **Category / Domain:** Developer Tools / Autonomous GUI Agents, Mobile & Computer Use, Visual Grounding  
 > **Compliance Standard:** OpenGAP Checkpoint 2 (Explainability & Decision Governance), OWASP LLM Top 10, MITRE ATLAS  
@@ -11,7 +11,7 @@ This document explains the internal mechanisms, data lineage, operational bounda
 
 ## How the Agent Decides
 
-# Explainability & Decision Transparency Report operates via a deterministic five-stage operational pipeline.
+The agent navigates device GUIs via a deterministic, 5-stage vision-language perception and interaction pipeline.
 
 ### 1. Decision Architecture
 
@@ -52,7 +52,6 @@ The runtime intake, state classification, evaluation, and execution tracking ope
 
 ### 2. Decision Logic & Routing Formulations
 
-Scoring
 Target element selection across candidate screen bounding boxes uses a visual-textual affinity formulation:
 
 $$S_{\text{ground}}(b_i) = w_1 \cdot \text{CosineSim}(\mathbf{e}_{\text{subgoal}}, \mathbf{e}_{\text{label}}(b_i)) + w_2 \cdot \text{VisualRelevance}(b_i) - w_3 \cdot \text{Distance}(b_i, b_{\text{prev}})$$
@@ -70,29 +69,31 @@ Where $\mathbf{z}(I_t)$ and $\mathbf{z}(I_{t+1})$ represent visual feature repre
 
 ### 3. Thresholding & Refusal Decision Criteria
 
-# Explainability & Decision Transparency Report enforces strict operational boundaries and deterministic refusal thresholds:
-- **Refusal on ERR_FINANCIAL_ACTION_BLOCKED**: **Financial / Payment Gate** halts execution with code `ERR_FINANCIAL_ACTION_BLOCKED`.
-- **Refusal on ERR_CREDENTIAL_ENTRY_RESTRICTED**: **Credential / Password Entry** halts execution with code `ERR_CREDENTIAL_ENTRY_RESTRICTED`.
-- **Refusal on ERR_INVALID_GESTURE_COORDINATES**: **Coordinate Out-of-Bounds** halts execution with code `ERR_INVALID_GESTURE_COORDINATES`.
-- **Refusal on ERR_GUI_STALL_LOOP_DETECTED**: **GUI State Loop Detection** halts execution with code `ERR_GUI_STALL_LOOP_DETECTED`.
-- **Refusal on ERR_ADB_DEVICE_OFFLINE**: **Device Disconnection** halts execution with code `ERR_ADB_DEVICE_OFFLINE`.
+Mobile Agent enforces strict operational boundaries and deterministic refusal thresholds:
+- **Refusal on ERR_FINANCIAL_ACTION_BLOCKED**: Financial / Payment Gate (Button = `Pay`, `Transfer`, `Buy`) halts execution with code `ERR_FINANCIAL_ACTION_BLOCKED`.
+- **Refusal on ERR_CREDENTIAL_ENTRY_RESTRICTED**: Credential / Password Entry (Input type = `password` / PIN) halts execution with code `ERR_CREDENTIAL_ENTRY_RESTRICTED`.
+- **Refusal on ERR_INVALID_GESTURE_COORDINATES**: Coordinate Out-of-Bounds ($x > W_{\text{screen}}$ or $y > H_{\text{screen}}$) halts execution with code `ERR_INVALID_GESTURE_COORDINATES`.
+- **Refusal on ERR_GUI_STALL_LOOP_DETECTED**: GUI State Loop Detection ($\Delta I < 0.02$ for 3 turns) halts execution with code `ERR_GUI_STALL_LOOP_DETECTED`.
+- **Refusal on ERR_ADB_DEVICE_OFFLINE**: Device Disconnection (ADB connection lost) halts execution with code `ERR_ADB_DEVICE_OFFLINE`.
 
 ### 4. Fallback Decision Mechanism
 
 Continuous operational stability is maintained through layered fault recovery:
+- **Tier 1 (Coordinate Perturbation Retry)**: If a tap fails to trigger a state transition, the agent slightly shifts coordinates within the bounding box and retries.
+- **Tier 2 (Navigation Backtracking)**: If an incorrect page or interstitial popup appears, the agent executes an Android `BACK` hardware key event to restore prior state.
 - **Model Fallback Cascade**: High-level reasoning and synthesis default to `gemini-2.0-flash` with automatic failover to `gpt-4o` and `claude-3-5-sonnet`.
 
 ### 5. Human-in-the-Loop Governance
 
 Human operators retain sovereign authority over the multi-agent execution lifecycle:
-- **Consequential Action Sign-Off**: Sensitive and consequential actions require operator sign-off.
-- **Offline Ledger Auditing**: Operators can verify execution records and state transitions offline.
+- **Tier 3 (HumanintheLoop Handoff)**: On critical checkout screens, CAPTCHA challenges, or biometric gates, the agent relinquishes control and prompts the user to complete the action manually.
+- **Benchmark Trajectory Auditing**: Operators inspect evaluation traces, raw generation tokens, and container logs to verify scoring fidelity.
 
 ---
 
 ## The Data It Uses
 
-# Explainability & Decision Transparency Report operates under strict principles of data minimization, environment isolation, and privacy protection.
+Mobile Agent operates under strict principles of data minimization, environment isolation, and privacy protection.
 
 ### 1. Ingested Input Data
 
@@ -122,7 +123,7 @@ The framework processes only operational data necessary to perform its functions
 
 ## Limitations
 
-Understanding the operational boundaries and technical constraints of # Explainability & Decision Transparency Report is essential for effective deployment.
+Understanding the operational boundaries and technical constraints of Mobile Agent is essential for effective deployment.
 
 ### 1. Complex Dynamic Video & Gaming Interfaces
 - **Limitation**: Real-time video playback or gaming graphics lack static UI hierarchies, confounding OCR and bounding box parsers.
